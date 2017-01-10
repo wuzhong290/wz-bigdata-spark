@@ -65,7 +65,8 @@ public final class JavaALS {
 
         JavaRDD<Rating> ratings = lines.map(new ParseRating());
 
-        MatrixFactorizationModel model = ALS.train(ratings.rdd(), rank, iterations, 0.01, blocks);
+        //MatrixFactorizationModel model = ALS.train(ratings.rdd(), rank, iterations, 0.01, blocks);
+        MatrixFactorizationModel model = ALS.trainImplicit(ratings.rdd(), rank, iterations, 0.01, 1);
 
         List<String> userFeatures = model.userFeatures().toJavaRDD().map(new FeaturesToString()).collect();
         for (String feature : userFeatures){
